@@ -15,13 +15,13 @@ class Client extends Model
         'phone',
     ];
 
-    // Relación 1:N con Orders
+
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
 
-    // Relación inversa con User
+
     public function user()
     {
         return $this->belongsTo(User::class);

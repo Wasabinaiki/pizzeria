@@ -5,19 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PizzaSize extends Model
+class Ingredient extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'pizza_id',
-        'size',
-        'price',
+        'name',
     ];
 
 
-    public function pizza()
+    public function pizzas()
     {
-        return $this->belongsTo(Pizza::class);
+        return $this->belongsToMany(Pizza::class, 'pizza_ingredient');
     }
 }
