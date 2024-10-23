@@ -1,35 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>Lista de Usuarios</h1>
-    <a href="{{ route('users.create') }}" class="btn btn-primary mb-3">Nuevo Usuario</a>
+    <h1>Lista de Proveedores</h1>
+    <a href="{{ route('suppliers.create') }}" class="btn btn-primary">Agregar Proveedor</a>
     <table class="table">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Email</th>
+                <th>Contacto</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($users as $user)
+            @foreach ($suppliers as $supplier)
                 <tr>
-                    <td>{{ $user->id }}</td>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->email }}</td>
+                    <td>{{ $supplier->id }}</td>
+                    <td>{{ $supplier->name }}</td>
+                    <td>{{ $supplier->contact_info }}</td>
                     <td>
-                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Editar</a>
-                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger">Eliminar</button>
-                        </form>
+                        <a href="{{ route('suppliers.edit', $supplier->id) }}" class="btn btn-warning">Editar</a>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-</div>
 @endsection
