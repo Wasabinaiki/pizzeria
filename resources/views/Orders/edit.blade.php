@@ -1,29 +1,59 @@
-{{-- resources/views/user/edit.blade.php --}}
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>Editar Usuario</h1>
-    <form action="{{ route('users.update', $user->id) }}" method="POST">
+    <h1>Editar Pedido</h1>
+    
+    <!-- Formulario para editar un pedido -->
+    <form action="{{ route('orders.update', $order->id) }}" method="POST">
         @csrf
         @method('PUT')
-        <div class="form-group mb-3">
-            <label for="name">Nombre</label>
-            <input type="text" name="name" class="form-control" value="{{ $user->name }}" required>
-        </div>
-        <div class="form-group mb-3">
-            <label for="email">Correo Electrónico</label>
-            <input type="email" name="email" class="form-control" value="{{ $user->email }}" required>
-        </div>
-        <div class="form-group mb-3">
-            <label for="role">Rol</label>
-            <select name="role" class="form-control" required>
-                <option value="cliente" {{ $user->role == 'cliente' ? 'selected' : '' }}>Cliente</option>
-                <option value="empleado" {{ $user->role == 'empleado' ? 'selected' : '' }}>Empleado</option>
+
+        <div class="form-group">
+            <label for="client_id">Cliente</label>
+            <select name="client_id" class="form-control" required>
+                @foreach ($clients as $client)
+                    <option value="{{ $client->id }}" {{ $order->client_id == $client->id ? 'selected' : '' }}>
+                        {{ $client->name }}
+                    </option>
+                @endforeach
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
-        <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>
+
+        <div class="form-group">
+            <label for="branch_id">Sucursal</label>
+            <select name="branch_id" class="form-control" required>
+                @foreach ($branches as $branch)
+                    <option value="{{ $branch->id }}" {{ $order->branch_id == $branch->id ? 'selected' : '' }}>
+                        {{ $branch->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="total_price">Total</label>
+            <input type="text" name="total_price" class="form-control" value="{{ $order->total_price }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="status">Estatus</label>
+            <select name="status" class="form-control" required>
+                <option value="pendiente" {{ $order->status == 'pendiente' ? 'selected' : '' }}>Pendiente</option>
+                <option value="en_preparacion" {{ $order->status == 'en_preparacion' ? 'selected' : '' }}>En Preparación</option>
+                <option value="listo" {{ $order->status == 'listo' ? 'selected' : '' }}>Listo</option>
+                <option value="entregado" {{ $order->status == 'entregado' ? 'selected' : '' }}>Entregado</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="delivery_type">Tipo de Entrega</label>
+            <select name="delivery_type" class="form-control" required>
+                <option value="en_local" {{ $order->delivery_type == 'en_local' ? 'selected' : '' }}>En Local</option>
+                <option value="a_domicilio" {{ $order->delivery_type == 'a_domicilio' ? 'selected' : '' }}>A Domicilio</option>
+            </select>
+        </div>
+
+        <!-- Botón para enviar el formulario -->
+        <button type="submit" class="btn btn-primary">Actualizar</button>
     </form>
-</div>
 @endsection
