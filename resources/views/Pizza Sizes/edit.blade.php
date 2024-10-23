@@ -1,29 +1,32 @@
-{{-- resources/views/user/edit.blade.php --}}
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>Editar Usuario</h1>
-    <form action="{{ route('users.update', $user->id) }}" method="POST">
+    <h1>Editar Tamaño de Pizza</h1>
+    <form action="{{ route('pizza_sizes.update', $size->id) }}" method="POST">
         @csrf
         @method('PUT')
-        <div class="form-group mb-3">
-            <label for="name">Nombre</label>
-            <input type="text" name="name" class="form-control" value="{{ $user->name }}" required>
-        </div>
-        <div class="form-group mb-3">
-            <label for="email">Correo Electrónico</label>
-            <input type="email" name="email" class="form-control" value="{{ $user->email }}" required>
-        </div>
-        <div class="form-group mb-3">
-            <label for="role">Rol</label>
-            <select name="role" class="form-control" required>
-                <option value="cliente" {{ $user->role == 'cliente' ? 'selected' : '' }}>Cliente</option>
-                <option value="empleado" {{ $user->role == 'empleado' ? 'selected' : '' }}>Empleado</option>
+        <div class="form-group">
+            <label for="pizza_id">Pizza</label>
+            <select name="pizza_id" class="form-control" required>
+                @foreach ($pizzas as $pizza)
+                    <option value="{{ $pizza->id }}" {{ $size->pizza_id == $pizza->id ? 'selected' : '' }}>
+                        {{ $pizza->name }}
+                    </option>
+                @endforeach
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
-        <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>
+        <div class="form-group">
+            <label for="size">Tamaño</label>
+            <select name="size" class="form-control" required>
+                <option value="pequeña" {{ $size->size == 'pequeña' ? 'selected' : '' }}>Pequeña</option>
+                <option value="mediana" {{ $size->size == 'mediana' ? 'selected' : '' }}>Mediana</option>
+                <option value="grande" {{ $size->size == 'grande' ? 'selected' : '' }}>Grande</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="price">Precio</label>
+            <input type="text" name="price" class="form-control" value="{{ $size->price }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Actualizar</button>
     </form>
-</div>
 @endsection

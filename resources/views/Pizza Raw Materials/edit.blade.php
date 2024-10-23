@@ -1,29 +1,34 @@
-{{-- resources/views/user/edit.blade.php --}}
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>Editar Usuario</h1>
-    <form action="{{ route('users.update', $user->id) }}" method="POST">
+    <h1>Editar Materia Prima de Pizza</h1>
+    <form action="{{ route('pizza_raw_materials.update', $pizza_raw_material->id) }}" method="POST">
         @csrf
         @method('PUT')
-        <div class="form-group mb-3">
-            <label for="name">Nombre</label>
-            <input type="text" name="name" class="form-control" value="{{ $user->name }}" required>
-        </div>
-        <div class="form-group mb-3">
-            <label for="email">Correo Electrónico</label>
-            <input type="email" name="email" class="form-control" value="{{ $user->email }}" required>
-        </div>
-        <div class="form-group mb-3">
-            <label for="role">Rol</label>
-            <select name="role" class="form-control" required>
-                <option value="cliente" {{ $user->role == 'cliente' ? 'selected' : '' }}>Cliente</option>
-                <option value="empleado" {{ $user->role == 'empleado' ? 'selected' : '' }}>Empleado</option>
+        <div class="form-group">
+            <label for="pizza_id">Pizza</label>
+            <select name="pizza_id" class="form-control" required>
+                @foreach ($pizzas as $pizza)
+                    <option value="{{ $pizza->id }}" {{ $pizza_raw_material->pizza_id == $pizza->id ? 'selected' : '' }}>
+                        {{ $pizza->name }}
+                    </option>
+                @endforeach
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
-        <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>
+        <div class="form-group">
+            <label for="raw_material_id">Materia Prima</label>
+            <select name="raw_material_id" class="form-control" required>
+                @foreach ($raw_materials as $raw_material)
+                    <option value="{{ $raw_material->id }}" {{ $pizza_raw_material->raw_material_id == $raw_material->id ? 'selected' : '' }}>
+                        {{ $raw_material->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="quantity">Cantidad</label>
+            <input type="text" name="quantity" class="form-control" value="{{ $pizza_raw_material->quantity }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Actualizar</button>
     </form>
-</div>
 @endsection

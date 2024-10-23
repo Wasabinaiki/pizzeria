@@ -1,35 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>Lista de Usuarios</h1>
-    <a href="{{ route('users.create') }}" class="btn btn-primary mb-3">Nuevo Usuario</a>
+    <h1>Lista de Ingredientes de Pizza</h1>
+    <a href="{{ route('pizza_ingredients.create') }}" class="btn btn-primary">Agregar Ingrediente a Pizza</a>
     <table class="table">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Nombre</th>
-                <th>Email</th>
+                <th>Pizza</th>
+                <th>Ingrediente</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($users as $user)
+            @foreach ($pizza_ingredients as $pizza_ingredient)
                 <tr>
-                    <td>{{ $user->id }}</td>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->email }}</td>
+                    <td>{{ $pizza_ingredient->id }}</td>
+                    <td>{{ $pizza_ingredient->pizza->name }}</td>
+                    <td>{{ $pizza_ingredient->ingredient->name }}</td>
                     <td>
-                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Editar</a>
-                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger">Eliminar</button>
-                        </form>
+                        <a href="{{ route('pizza_ingredients.edit', $pizza_ingredient->id) }}" class="btn btn-warning">Editar</a>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-</div>
 @endsection
