@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EmployeeController;
@@ -18,9 +19,23 @@ use App\Http\Controllers\RawMaterialController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 
-// Rutas que requieren autenticación
-Route::middleware(['auth'])->group(function () {
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Rutas de recursos para la pizzería
     Route::resource('branches', BranchController::class);
     Route::resource('clients', ClientController::class);
     Route::resource('employees', EmployeeController::class);
@@ -37,8 +52,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('raw-materials', RawMaterialController::class);
     Route::resource('suppliers', SupplierController::class);
     Route::resource('users', UserController::class);
-
 });
 
-// Rutas de autenticación proporcionadas por Breeze
-require _DIR_ . '/auth.php';
+// Requiere las rutas de autenticación de Breeze
+require __DIR__ . '/auth.php';
