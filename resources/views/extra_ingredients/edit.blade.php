@@ -1,10 +1,10 @@
-{{-- resources/views/extra_ingredient/edit.blade.php --}}
+{{-- resources/views/extra_ingredients/edit.blade.php --}}
 @extends('layouts.app')
 
 @section('content')
 <div class="container">
     <h1>Editar Ingrediente Extra</h1>
-    <form action="{{ route('extra_ingredients.update', $extraIngredient->id) }}" method="POST">
+    <form action="{{ route('extra-ingredients.update', $extraIngredient->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="form-group mb-3">
@@ -16,7 +16,7 @@
             <input type="number" name="price" class="form-control" value="{{ $extraIngredient->price }}" step="0.01" required>
         </div>
         <button type="submit" class="btn btn-primary">Actualizar Ingrediente Extra</button>
-        <a href="{{ route('extra_ingredients.index') }}" class="btn btn-secondary">Cancelar</a>
+        <a href="{{ route('extra-ingredients.index') }}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
 @endsection

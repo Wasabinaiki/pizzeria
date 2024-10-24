@@ -27,7 +27,7 @@ class ExtraIngredientController extends Controller
 
         ExtraIngredient::create($request->all());
 
-        return redirect()->route('extra_ingredients.index')
+        return redirect()->route('extra-ingredients.index') // Cambiado aquí
                          ->with('success', 'Extra ingredient created successfully.');
     }
 
@@ -50,7 +50,7 @@ class ExtraIngredientController extends Controller
 
         $extraIngredient->update($request->all());
 
-        return redirect()->route('extra_ingredients.index')
+        return redirect()->route('extra-ingredients.index') // Cambiado aquí
                          ->with('success', 'Extra ingredient updated successfully.');
     }
 
@@ -58,7 +58,7 @@ class ExtraIngredientController extends Controller
     {
         $extraIngredient->delete();
 
-        return redirect()->route('extra_ingredients.index')
+        return redirect()->route('extra-ingredients.index') // Cambiado aquí
                          ->with('success', 'Extra ingredient deleted successfully.');
     }
 }
