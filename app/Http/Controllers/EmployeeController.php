@@ -23,49 +23,47 @@ class EmployeeController extends Controller
         $request->validate([
             'user_id' => 'required|exists:users,id',
             'position' => 'required|in:cajero,administrador,cocinero,mensajero',
-            'identification_number' => 'required|string',
+            'identification_number' => 'required|string|max:20',
             'salary' => 'required|numeric',
-            'hire_date' => 'required|date'
+            'hire_date' => 'required|date',
         ]);
 
         Employee::create($request->all());
 
-        return redirect()->route('employees.index');
+        return redirect()->route('employees.index')
+                         ->with('success', 'Employee created successfully.');
     }
 
-    public function show($id)
+    public function show(Employee $employee)
     {
-        $employee = Employee::findOrFail($id);
         return view('employees.show', compact('employee'));
     }
 
-    public function edit($id)
+    public function edit(Employee $employee)
     {
-        $employee = Employee::findOrFail($id);
         return view('employees.edit', compact('employee'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Employee $employee)
     {
-        $employee = Employee::findOrFail($id);
-
         $request->validate([
             'position' => 'required|in:cajero,administrador,cocinero,mensajero',
-            'identification_number' => 'required|string',
+            'identification_number' => 'required|string|max:20',
             'salary' => 'required|numeric',
-            'hire_date' => 'required|date'
+            'hire_date' => 'required|date',
         ]);
 
         $employee->update($request->all());
 
-        return redirect()->route('employees.index');
+        return redirect()->route('employees.index')
+                         ->with('success', 'Employee updated successfully.');
     }
 
-    public function destroy($id)
+    public function destroy(Employee $employee)
     {
-        $employee = Employee::findOrFail($id);
         $employee->delete();
 
-        return redirect()->route('employees.index');
+        return redirect()->route('employees.index')
+                         ->with('success', 'Employee deleted successfully.');
     }
 }

@@ -22,46 +22,45 @@ class ClientController extends Controller
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'address' => 'nullable|string',
-            'phone' => 'nullable|string'
+            'address' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:20',
         ]);
 
         Client::create($request->all());
 
-        return redirect()->route('clients.index');
+        return redirect()->route('clients.index')
+                         ->with('success', 'Client created successfully.');
     }
 
-    public function show($id)
+    public function show(Client $client)
     {
-        $client = Client::findOrFail($id);
         return view('clients.show', compact('client'));
     }
 
-    public function edit($id)
+    public function edit(Client $client)
     {
-        $client = Client::findOrFail($id);
         return view('clients.edit', compact('client'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Client $client)
     {
-        $client = Client::findOrFail($id);
-
         $request->validate([
-            'address' => 'nullable|string',
-            'phone' => 'nullable|string'
+            'address' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:20',
         ]);
 
         $client->update($request->all());
 
-        return redirect()->route('clients.index');
+        return redirect()->route('clients.index')
+                         ->with('success', 'Client updated successfully.');
     }
 
-    public function destroy($id)
+    public function destroy(Client $client)
     {
-        $client = Client::findOrFail($id);
         $client->delete();
 
-        return redirect()->route('clients.index');
+        return redirect()->route('clients.index')
+                         ->with('success', 'Client deleted successfully.');
     }
 }
+

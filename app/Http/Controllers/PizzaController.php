@@ -21,44 +21,42 @@ class PizzaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255'
+            'name' => 'required|string|max:255',
         ]);
 
         Pizza::create($request->all());
 
-        return redirect()->route('pizzas.index');
+        return redirect()->route('pizzas.index')
+                         ->with('success', 'Pizza created successfully.');
     }
 
-    public function show($id)
+    public function show(Pizza $pizza)
     {
-        $pizza = Pizza::findOrFail($id);
         return view('pizzas.show', compact('pizza'));
     }
 
-    public function edit($id)
+    public function edit(Pizza $pizza)
     {
-        $pizza = Pizza::findOrFail($id);
         return view('pizzas.edit', compact('pizza'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Pizza $pizza)
     {
-        $pizza = Pizza::findOrFail($id);
-
         $request->validate([
-            'name' => 'required|string|max:255'
+            'name' => 'required|string|max:255',
         ]);
 
         $pizza->update($request->all());
 
-        return redirect()->route('pizzas.index');
+        return redirect()->route('pizzas.index')
+                         ->with('success', 'Pizza updated successfully.');
     }
 
-    public function destroy($id)
+    public function destroy(Pizza $pizza)
     {
-        $pizza = Pizza::findOrFail($id);
         $pizza->delete();
 
-        return redirect()->route('pizzas.index');
+        return redirect()->route('pizzas.index')
+                         ->with('success', 'Pizza deleted successfully.');
     }
 }
