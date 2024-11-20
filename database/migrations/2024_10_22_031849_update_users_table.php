@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,9 +12,10 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            // Aquí puedes agregar columnas o hacer cambios
-            // Por ejemplo, agregar una columna 'profile_picture'
-            $table->string('profile_picture')->nullable(); 
+            // Agregar la columna 'role' con valores predeterminados
+            $table->enum('role', ['cliente', 'empleado', 'administrador'])->default('cliente')->after('password');
+            // La columna 'profile_picture' permanece igual
+            $table->string('profile_picture')->nullable();
         });
     }
 
@@ -23,7 +25,9 @@ return new class extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            // Aquí debes eliminar la columna que agregaste
+            // Eliminar la columna 'role'
+            $table->dropColumn('role');
+            // Eliminar la columna 'profile_picture'
             $table->dropColumn('profile_picture');
         });
     }
