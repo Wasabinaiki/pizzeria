@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,7 +14,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('clients.index') }}">Clientes</a>
                 </li>
@@ -43,6 +43,13 @@
                     <a class="nav-link" href="{{ route('profile.edit') }}">Perfil</a>
                 </li>
             </ul>
+            <!-- Selector de idioma -->
+            <form class="form-inline my-2 my-lg-0">
+                <select class="form-control" onchange="window.location.href=this.value;">
+                    <option value="{{ route('lang.switch', 'es') }}" {{ app()->getLocale() === 'es' ? 'selected' : '' }}>Español</option>
+                    <option value="{{ route('lang.switch', 'en') }}" {{ app()->getLocale() === 'en' ? 'selected' : '' }}>English</option>
+                </select>
+            </form>
         </div>
     </nav>
 
