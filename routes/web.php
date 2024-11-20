@@ -18,18 +18,22 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RawMaterialController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LanguageController; // Agregar controlador de idiomas
 
-
+// Ruta de inicio
 Route::get('/', function () {
     return view('welcome');
 });
 
-
+// Ruta del dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Cambio de idioma
+Route::get('/lang/{locale}', [LanguageController::class, 'switchLang'])->name('lang.switch');
 
+// Grupo de rutas protegidas por autenticación
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
